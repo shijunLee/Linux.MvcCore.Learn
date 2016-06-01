@@ -20,6 +20,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Linux.MvcCore.Learn.Model",
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Pinyin4Net", "src\Pinyin4Net\Pinyin4Net.xproj", "{1AC15082-202B-493D-A35A-DE7F10F9CE73}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PinYin4NetCore", "..\pinyin4net-master\src\PinYin4NetCore\PinYin4NetCore.xproj", "{C3A18BB1-52F0-4105-BE24-362A55A032ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{1AC15082-202B-493D-A35A-DE7F10F9CE73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AC15082-202B-493D-A35A-DE7F10F9CE73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AC15082-202B-493D-A35A-DE7F10F9CE73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3A18BB1-52F0-4105-BE24-362A55A032ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3A18BB1-52F0-4105-BE24-362A55A032ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3A18BB1-52F0-4105-BE24-362A55A032ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3A18BB1-52F0-4105-BE24-362A55A032ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,5 +62,6 @@ Global
 		{1923F969-3174-4B3B-BB87-2899255E25B3} = {22A9CB04-5CD3-4F22-8D20-C0181D6D08D1}
 		{575FB1F4-EFA5-4F02-B5A8-009F4A9FF235} = {22A9CB04-5CD3-4F22-8D20-C0181D6D08D1}
 		{1AC15082-202B-493D-A35A-DE7F10F9CE73} = {22A9CB04-5CD3-4F22-8D20-C0181D6D08D1}
+		{C3A18BB1-52F0-4105-BE24-362A55A032ED} = {22A9CB04-5CD3-4F22-8D20-C0181D6D08D1}
 	EndGlobalSection
 EndGlobal

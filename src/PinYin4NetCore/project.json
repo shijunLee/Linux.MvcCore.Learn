@@ -1,11 +1,13 @@
-{
+﻿{
+  "title": "PinYin4NetCore",
+  "description": ".net Core PinYin4Net",
   "version": "1.0.0-*",
 
   "dependencies": {
     "NETStandard.Library": "1.5.0-rc2-24027",
-    "PinYin4NetCore": "1.0.0-*"
-  },
+    "System.Reflection": "4.1.0-rc2-24027"
 
+  }, 
   "frameworks": {
     "netstandard1.5": {
       "imports": "dnxcore50"

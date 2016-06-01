@@ -52,11 +52,15 @@ namespace hyjiacan.util.p4n
         {
             try
             {
-                String mappingFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"pinyindb/pinyin_mapping.xml");
+                String mappingFileName = Path.Combine(AppContext.BaseDirectory,"pinyindb/pinyin_mapping.xml");
 
-                XmlDocument doc = new XmlDocument();
-                doc.Load(mappingFileName);
+                XmlDocument doc = new XmlDocument(); 
                 setPinyinMappingDoc(doc);
+                using (FileStream stream = File.OpenRead(mappingFileName))
+                {
+                    doc.Load(stream);
+                    setPinyinMappingDoc(doc);
+                }
             }
             catch (FileNotFoundException ex)
             {

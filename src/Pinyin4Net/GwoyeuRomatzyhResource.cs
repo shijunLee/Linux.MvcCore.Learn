@@ -55,9 +55,11 @@ namespace hyjiacan.util.p4n
                 
                 String mappingFileName = Path.Combine(AppContext.BaseDirectory, "pinyindb/pinyin_gwoyeu_mapping.xml");
                 XmlDocument doc = new XmlDocument();
-                doc.Load(mappingFileName);
-                
-                setPinyinToGwoyeuMappingDoc(doc);
+                using (FileStream stream = File.OpenRead(mappingFileName))
+                {
+                    doc.Load(stream);
+                    setPinyinToGwoyeuMappingDoc(doc); 
+                } 
             }
             catch (FileNotFoundException ex)
             {

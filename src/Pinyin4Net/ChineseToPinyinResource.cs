@@ -53,10 +53,9 @@ namespace hyjiacan.util.p4n
         {
             try
             {
-                var resourceName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "pinyindb/unicode_to_hanyu_pinyin.txt");
+                var resourceName = Path.Combine(AppContext.BaseDirectory, "pinyindb/unicode_to_hanyu_pinyin.txt");
 
-                var table = File.ReadLines(resourceName)
-                                .AsParallel()
+                var table = File.ReadLines(resourceName) 
                                 .Select(l => l.Split(' '))
                                 .ToDictionary(l => l[0], l => l[1]);
                 unicodeToHanyuPinyinTable = new ConcurrentDictionary<string, string>(table);
