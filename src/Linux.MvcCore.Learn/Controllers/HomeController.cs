@@ -16,7 +16,7 @@ namespace Linux.MvcCore.Learn.Controllers
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
+            //AppDomain.CurrentDomain.GetAssemblies();
             return View();
         }
 

@@ -12,6 +12,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Linux.MvcCore.Learn", "src\Linux.MvcCore.Learn\Linux.MvcCore.Learn.xproj", "{F842A607-461F-448B-9159-786B827668E6}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Linux.MvcCore.Learn.Common", "src\Linux.MvcCore.Learn.Common\Linux.MvcCore.Learn.Common.xproj", "{2B2E91B5-9403-47FC-99EF-928EEC4142F2}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Linux.MvcCore.Learn.DDL", "src\Linux.MvcCore.Learn.DDL\Linux.MvcCore.Learn.DDL.xproj", "{1923F969-3174-4B3B-BB87-2899255E25B3}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Linux.MvcCore.Learn.Model", "src\Linux.MvcCore.Learn.Model\Linux.MvcCore.Learn.Model.xproj", "{575FB1F4-EFA5-4F02-B5A8-009F4A9FF235}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Pinyin4Net", "src\Pinyin4Net\Pinyin4Net.xproj", "{1AC15082-202B-493D-A35A-DE7F10F9CE73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,11 +30,31 @@ Global
 		{F842A607-461F-448B-9159-786B827668E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F842A607-461F-448B-9159-786B827668E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F842A607-461F-448B-9159-786B827668E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B2E91B5-9403-47FC-99EF-928EEC4142F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B2E91B5-9403-47FC-99EF-928EEC4142F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B2E91B5-9403-47FC-99EF-928EEC4142F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B2E91B5-9403-47FC-99EF-928EEC4142F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1923F969-3174-4B3B-BB87-2899255E25B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1923F969-3174-4B3B-BB87-2899255E25B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1923F969-3174-4B3B-BB87-2899255E25B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1923F969-3174-4B3B-BB87-2899255E25B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{575FB1F4-EFA5-4F02-B5A8-009F4A9FF235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{575FB1F4-EFA5-4F02-B5A8-009F4A9FF235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{575FB1F4-EFA5-4F02-B5A8-009F4A9FF235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{575FB1F4-EFA5-4F02-B5A8-009F4A9FF235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AC15082-202B-493D-A35A-DE7F10F9CE73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC15082-202B-493D-A35A-DE7F10F9CE73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC15082-202B-493D-A35A-DE7F10F9CE73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC15082-202B-493D-A35A-DE7F10F9CE73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F842A607-461F-448B-9159-786B827668E6} = {22A9CB04-5CD3-4F22-8D20-C0181D6D08D1}
+		{2B2E91B5-9403-47FC-99EF-928EEC4142F2} = {22A9CB04-5CD3-4F22-8D20-C0181D6D08D1}
+		{1923F969-3174-4B3B-BB87-2899255E25B3} = {22A9CB04-5CD3-4F22-8D20-C0181D6D08D1}
+		{575FB1F4-EFA5-4F02-B5A8-009F4A9FF235} = {22A9CB04-5CD3-4F22-8D20-C0181D6D08D1}
+		{1AC15082-202B-493D-A35A-DE7F10F9CE73} = {22A9CB04-5CD3-4F22-8D20-C0181D6D08D1}
 	EndGlobalSection
 EndGlobal
