@@ -7,6 +7,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using log4net.Config;
+using System.IO;
+using log4net.Repository;
+using log4net;
+using System.Collections;
+using System.Xml;
 
 namespace Linux.MvcCore.Learn
 {
@@ -14,6 +20,18 @@ namespace Linux.MvcCore.Learn
     {
         public Startup(IHostingEnvironment env)
         {
+
+            //log4net.Config.XmlConfigurator.ConfigureAndWatch(rep, env.WebRootPath + "Log4Net.config");
+            using (Stream stream = File.Open(env.ContentRootPath + "\\Log4Net.config", FileMode.Open))
+            {
+                XmlDocument log4netConfig = new XmlDocument();
+                log4netConfig.Load(stream);
+                ILoggerRepository rep = LogManager.CreateRepository("linux.mvcCore.Learn"); 
+                ICollection configurationMessages = XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
+                //log4net.ILog log = LogManager.
+            }
+            
+            // var item = env.ContentRootPath + "log4net.xml";
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -46,6 +64,7 @@ namespace Linux.MvcCore.Learn
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            
 
             app.UseStaticFiles();
 

@@ -29,7 +29,6 @@
         "portable-net45+win8+dnxcore50",
         "portable-net45+win8"
       ]
-
     },
     "Microsoft.EntityFrameworkCore.Tools.Cli": "1.0.0-preview1-final",
     "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc2-final",
@@ -42,7 +41,9 @@
     "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview1-final",
       "type": "build"
-    }
+    },
+    "log4net": "3.0.0-rc2",
+    "Linux.MvcCore.Learn.Common": "1.0.0-*"
   },
 
   "tools": {
