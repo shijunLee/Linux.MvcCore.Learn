@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Linux.MVC.Learn.Common.Extensions
+namespace Linux.MvcCore.Learn.Common.Extensions
 {
     public static class DateTimeExtensions
     {

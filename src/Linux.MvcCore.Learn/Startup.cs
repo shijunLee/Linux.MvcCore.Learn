@@ -13,6 +13,10 @@ using log4net.Repository;
 using log4net;
 using System.Collections;
 using System.Xml;
+using Linux.MvcCore.Learn.Model;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace Linux.MvcCore.Learn
 {
@@ -20,18 +24,16 @@ namespace Linux.MvcCore.Learn
     {
         public Startup(IHostingEnvironment env)
         {
-
-            //log4net.Config.XmlConfigurator.ConfigureAndWatch(rep, env.WebRootPath + "Log4Net.config");
+             
             using (Stream stream = File.Open(env.ContentRootPath + "\\Log4Net.config", FileMode.Open))
             {
                 XmlDocument log4netConfig = new XmlDocument();
                 log4netConfig.Load(stream);
                 ILoggerRepository rep = LogManager.CreateRepository("linux.mvcCore.Learn"); 
                 ICollection configurationMessages = XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
-                //log4net.ILog log = LogManager.
+                
             }
-            
-            // var item = env.ContentRootPath + "log4net.xml";
+             
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -45,6 +47,16 @@ namespace Linux.MvcCore.Learn
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDataProtection(option =>
+            {
+                option.ApplicationDiscriminator= "MvcCoreLearn";
+            });
+
+            var connection = Configuration["dataConnection:SqliteConnectionString"];
+
+            services.AddDbContext<LearnContext>(options =>
+                options.UseSqlite(connection)
+            );
             // Add framework services.
             services.AddMvc();
         }
@@ -52,6 +64,19 @@ namespace Linux.MvcCore.Learn
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+           var dataProtection = DataProtectionProvider.Create(env.ContentRootPath + "\\keys");
+           // var dataProtection = new DataProtectionProvider(new DirectoryInfo(@"C:\keys"));// no use UNC share
+            app.UseCookieAuthentication(new CookieAuthenticationOptions {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                CookieHttpOnly = true,
+                ExpireTimeSpan = TimeSpan.FromMinutes(43200),
+                LoginPath = new PathString("/Admin/login"),
+                CookieName = ".MvcCoreLearnCookie",
+                CookiePath = "/",
+                DataProtectionProvider = dataProtection
+            });
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 

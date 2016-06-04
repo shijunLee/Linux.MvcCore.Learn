@@ -1,38 +1,88 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Linq; 
+using Linux.MvcCore.Learn.Model.Admin;
+using Linux.MvcCore.Learn.Model;
+using Linux.MvcCore.Learn.DDL.UserManager;
+ 
+using Linux.MvcCore.Learn.Common;
+using Linux.MvcCore.Learn.DDL.BindingModel;
+using Linux.MvcCore.Learn.DDL.BlogManager;
+using Linux.MvcCore.Learn.DDL.ViewModel;
+using System.Net;
+using System.Collections;
 using Microsoft.AspNetCore.Mvc;
-using Linux.MVC.Learn.Common;
+using Newtonsoft.Json;
 
 namespace Linux.MvcCore.Learn.Controllers
 {
-    [LogErrorAttribute]
-    public class HomeController : Controller
+    public class HomeController : FrontBaseController
     {
-        public IActionResult Index()
+
+        public ActionResult KinderEditerTest()
         {
-            throw new Exception("日志测试功能");
             return View();
         }
 
-        public IActionResult About()
+
+        public JsonResult UploadPicture()
         {
-            ViewData["Message"] = "Your application description page.";
-            //AppDomain.CurrentDomain.GetAssemblies();
-            return View();
+            string upresult = "";
+            var imgFile = this.HttpContext.Request.Form.Files["imgFile"];
+             Hashtable extTable = new Hashtable();
+		    extTable.Add("image", "gif,jpg,jpeg,png,bmp");
+		    extTable.Add("flash", "swf,flv");
+		    extTable.Add("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
+		    extTable.Add("file", "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2");
+         //   JsonResult result = new JsonResult();
+          //  result.Data = new {  };
+            //hash["error"] = 0;
+            //hash["url"] = fileUrl;
+            return Json(new { error = 0, url = this.Request.PathBase+@"/Content/images/ymz.jpg" } );
         }
 
-        public IActionResult Contact()
+        public ActionResult Details(string id = "")
         {
-            ViewData["Message"] = "Your contact page.";
+            ISpamShieldService service = new SpamShieldService();
+            BlogPostManager manager = new BlogPostManager();
+            BlogPostDetailsViewModel model = manager.GetBlogDetails(new BlogPostDetailsBindingModel() { Permalink = id });
+            ViewBag.Title = model.BlogPost.Title;
 
-            return View();
+            ViewBag.Tick = service.CreateTick(id);
+            return View(model);
         }
 
-        public IActionResult Error()
+        public ActionResult Spamhash(string id)
         {
-            return View();
+            ISpamShieldService service = new SpamShieldService();
+            string result =  service.GenerateHash(id);
+            return Content(result);
+        }
+     
+        public ActionResult Index(int page = 1)
+        {
+            HomeMainManager homeMainManager = new HomeMainManager();
+            RecentBlogPostsViewModel model = homeMainManager.GetRecentBlogPosts(new RecentBlogPostsBindingModel() { Page = page,Take=10 });
+            if (model.Posts.Count() == 0)
+            {
+                if (page > 1)
+                    return Content("程序出现错误!", "text/html; charset=utf-8");
+                else
+                    return Content("MZBlog尚未发现任何已经发布的文章哦!", "text/html; charset=utf-8");
+            }
+            if (page == 1)
+                ViewBag.Title = "首页";
+            else
+                ViewBag.Title = "文章列表"; 
+            return View(model);
+
+        }
+
+        public ActionResult Tag(string id)
+        {
+            BlogTagManage manager = new BlogTagManage();
+            var result = manager.GetPostByTag(new TaggedBlogPostsBindingModel() { Tag = id });
+            return View(result);
         }
     }
 }

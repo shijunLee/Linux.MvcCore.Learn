@@ -2,7 +2,7 @@
 
 //WINDOWS 下与linux下有所区别在文件路径部分
 //[assembly: log4net.Config.XmlConfigurator(Environment. = @"bin/Log4Net.config", Watch = true)]
-namespace Linux.MVC.Learn.Common
+namespace Linux.MvcCore.Learn.Common
 {
     public class LogHelper
     {

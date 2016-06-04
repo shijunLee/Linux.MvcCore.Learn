@@ -1,4 +1,4 @@
-﻿{
+{
   "dependencies": {
     "Microsoft.NETCore.App": {
       "version": "1.0.0-rc2-3002702",
@@ -43,7 +43,14 @@
       "type": "build"
     },
     "log4net": "3.0.0-rc2",
-    "Linux.MvcCore.Learn.Common": "1.0.0-*"
+    "Linux.MvcCore.Learn.Common": "1.0.0-*",
+    "Linux.MvcCore.Learn.Model": "1.0.0-*",
+    "Linux.MvcCore.Learn.DDL": "1.0.0-*",
+    "Microsoft.AspNetCore.Identity": "1.0.0-rc2-final",
+    "Microsoft.AspNetCore.Authentication": "1.0.0-rc2-final",
+    "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0-rc2-final",
+    "Microsoft.AspNetCore.DataProtection": "1.0.0-rc2-final",
+    "Microsoft.AspNetCore.DataProtection.Extensions": "1.0.0-rc2-final" 
   },
 
   "tools": {

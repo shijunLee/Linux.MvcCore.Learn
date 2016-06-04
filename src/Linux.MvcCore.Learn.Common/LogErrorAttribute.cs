@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Linux.MVC.Learn.Common
+namespace Linux.MvcCore.Learn.Common
 {
     /// <summary>
     /// 异常日志

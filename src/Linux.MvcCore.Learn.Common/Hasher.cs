@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Linux.MVC.Learn.Common
+namespace Linux.MvcCore.Learn.Common
 {
     public class Hasher
     {

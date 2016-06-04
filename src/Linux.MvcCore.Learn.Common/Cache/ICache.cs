@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Linux.MVC.Learn.Common
+namespace Linux.MvcCore.Learn.Common
 {
     public interface ICache
     {

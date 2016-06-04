@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using System;
 
-namespace Linux.MVC.Learn.Common
+namespace Linux.MvcCore.Learn.Common
 {
     /// <summary>
     /// the runtime momery Cache class
