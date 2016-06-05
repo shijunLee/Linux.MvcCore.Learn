@@ -4,23 +4,34 @@ using Linux.MvcCore.Learn.DDL.BindingModel;
 using Linux.MvcCore.Learn.DDL.CommandModel;
 using Linux.MvcCore.Learn.DDL.ViewModel;
 using Linux.MvcCore.Learn.Model;
-using Linux.MvcCore.Learn.Model.Blog; 
+using Linux.MvcCore.Learn.Model.Blog;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Linux.MvcCore.Learn.DDL.BlogManager
 {
     /// <summary>
     /// 博客查询
     /// </summary>
-    public class BlogPostManager
+    public class BlogPostManager: IBlogPostManager
     {
+
+        private readonly LearnContext context;
+
+        private readonly ILogger _logger;
+
+        public BlogPostManager(LearnContext context, ILoggerFactory loggerFactory)
+        {
+            this._logger = loggerFactory.CreateLogger("IDataEventRecordResporitory");
+            this.context = context;
+        }
+
         public AllBlogPostsViewModel GetBlogPostList(AllBlogPostsBindingModel input)
         {
-            using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-            {
+             
                 var skip = (input.Page - 1) * input.Take;
 
                 var posts = context.BlogPosts.OrderByDescending(p => p.DateUTC).Skip(skip).Take(input.Take + 1).ToList().AsReadOnly();
@@ -32,7 +43,7 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
                     Page = input.Page,
                     HasNextPage = hasNextPage
                 };
-            }
+             
         }
 
 
@@ -40,44 +51,40 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
         {
             if (!String.IsNullOrEmpty(id))
             {
-                using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-                { 
-                    BlogPost post = context.BlogPosts.Where(p=>p.Id==id).SingleOrDefault();
+                 
+                    BlogPost post = context.BlogPosts.Where(p=>p.BlogId == id).SingleOrDefault();
                     if(post!=null)
                     {
                         context.BlogPosts.Remove(post);
                         context.SaveChanges();
                         return true;
                     }
-                    
-                }
+                 
             }
             return false;
         }
 
         public BlogPost GetById(string id)
         {
-            using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-            {
+            
                 BlogPost post = new BlogPost();
                 if (!String.IsNullOrEmpty(id))
                 {
-                    post = context.BlogPosts.Include(P=>P.Tags).Where(p => p.Id == id).SingleOrDefault();
+                    post = context.BlogPosts.Include(P=>P.Tags).Where(p => p.BlogId == id).SingleOrDefault();
                 }
                 return post;
-            }
+            
         }
 
         public BlogPostDetailsViewModel GetBlogDetails(BlogPostDetailsBindingModel input)
         {
-            using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-            {
-                BlogPost post = context.BlogPosts.Where(p => p.Id == input.Permalink).Include(P => P.Tags).Include(P=>P.Comments).SingleOrDefault();
+             
+                BlogPost post = context.BlogPosts.Where(p => p.BlogId == input.Permalink).Include(P => P.Tags).Include(P=>P.Comments).SingleOrDefault();
                 if (post != null)
                 {
                     return new BlogPostDetailsViewModel() { BlogPost=post, Comments=(post.Comments==null?new BlogComment[]{}: post.Comments.ToArray()) };
                 }
-            }
+           
 
             return null;
 
@@ -88,11 +95,10 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
             var markdown = new MarkdownSharp.Markdown();
             //TODO:应该验证TitleSlug是否唯一
 
-            using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-            {
+            
                 if (command != null)
                 {
-                    var post = context.BlogPosts.Include(P => P.Tags).Where(s => s.Id == command.PostId).SingleOrDefault();
+                    var post = context.BlogPosts.Include(P => P.Tags).Where(s => s.BlogId == command.PostId).SingleOrDefault();
                     if (post == null)
                     {
                         return null;
@@ -116,7 +122,7 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
                         {
                             BlogTag tag = new BlogTag();
                             tag.BlogTagId = Guid.NewGuid().ToString();
-                            tag.BlogPostId = post.Id;
+                            tag.BlogPostId = post.BlogId;
                             tag.Tag = item;
                             tag.Slug = item.ToSlug();
                             tag.BlogPost = post;
@@ -149,7 +155,7 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
                 {
                     return  null;
                 }
-            }
+             
         }
 
         /// <summary>
@@ -162,13 +168,12 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
             var markdown = new MarkdownSharp.Markdown();
             //TODO:应该验证TitleSlug是否唯一
 
-            using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-            {
+            
                 if (command != null)
                 {
                     var post = new BlogPost();
                     //   if (!String.IsNullOrEmpty(command.))
-                    post.Id = Guid.NewGuid().ToString();
+                    post.BlogId = Guid.NewGuid().ToString();
                     post.AuthorEmail = command.Author.Email;
                     post.AuthorDisplayName = command.Author.DisplayName;
                     post.MarkDown = command.MarkDown;
@@ -186,7 +191,7 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
                         {
                             BlogTag tag = new BlogTag();
                             tag.BlogTagId = Guid.NewGuid().ToString();
-                            tag.BlogPostId = post.Id; 
+                            tag.BlogPostId = post.BlogId; 
                             tag.Tag = item;
                             tag.BlogPost = post;
                             tagList.Add(tag);
@@ -209,7 +214,7 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
                 {
                     return false;
                 }
-            }
+            
 
         }
 

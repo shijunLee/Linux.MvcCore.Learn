@@ -8,7 +8,7 @@ namespace Linux.MvcCore.Learn.Model.Blog
 {
     public class SpamHash
     {
-        public string Id { get; set; }
+        public string SpamHashId { get; set; }
 
         public string PostKey { get; set; }
 

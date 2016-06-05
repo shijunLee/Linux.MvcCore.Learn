@@ -5,12 +5,21 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Identity; 
+using Microsoft.AspNetCore.Identity;
+using Linux.MvcCore.Learn.DDL.UserManager;
 
 namespace Linux.MvcCore.Learn.Controllers
 {
     public class AdminController : Controller
     {
+
+        private readonly IUserManager manager;
+
+
+        public AdminController(IUserManager manager)
+        {
+            this.manager = manager;
+        }
         // GET: / Home/Index
         [AllowAnonymous]
         public ActionResult Index(string ReturnUrl)
@@ -29,7 +38,7 @@ namespace Linux.MvcCore.Learn.Controllers
         public ActionResult Login(SysUser user, string ReturnUrl)
         {
 
-            DDL.UserManager.UserManager manager = new DDL.UserManager.UserManager();
+            //DDL.UserManager.UserManager manager = new DDL.UserManager.UserManager();
             LogHelper.WriteLog(typeof(String), "this is a test" + user.UserLoginName);
             bool result = manager.UserLogin(user.UserLoginName, user.Password);
 

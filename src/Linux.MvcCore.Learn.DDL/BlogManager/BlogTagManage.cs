@@ -3,6 +3,7 @@ using Linux.MvcCore.Learn.DDL.ViewModel;
 using Linux.MvcCore.Learn.Model;
 using Linux.MvcCore.Learn.Model.Blog;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,22 @@ using System.Threading.Tasks;
 
 namespace Linux.MvcCore.Learn.DDL.BlogManager
 {
-    public class BlogTagManage
+    public class BlogTagManage:IBlogTagManage
     {
+
+        private readonly LearnContext context;
+
+        private readonly ILogger _logger;
+
+        public BlogTagManage(LearnContext context, ILoggerFactory loggerFactory)
+        {
+            this._logger = loggerFactory.CreateLogger("IDataEventRecordResporitory");
+            this.context = context;
+        }
+
         public TagCloudViewModel GetAll(TagCloudBindingModel input)
         {
-            using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-            { 
+             
                List<BlogTagViewModel> list =
                 context.BlogTags.GroupBy(p => new { p.Tag, p.Slug }).
                 Select(group => new BlogTagViewModel(){ Name=group.Key.Tag, Slug=group.Key.Slug, PostCount=group.Count() })
@@ -28,14 +39,13 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
                        Tags = list
                    };
                }
-            }
+             
             return null;
         }
 
         public TaggedBlogPostsViewModel GetPostByTag(TaggedBlogPostsBindingModel input)
         {
-            using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-            {
+             
                 var blogs = context.BlogPosts.Include(p=>p.Tags)
                     .Where(p => p.Tags.Any(t => t.Tag == input.Tag))
                     .Where(p => p.Status == (int)PublishStatus.Published)
@@ -47,7 +57,7 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
                     Posts = blogs,
                     Tag = input.Tag
                 }; 
-            } 
+            
         }
     }
 }

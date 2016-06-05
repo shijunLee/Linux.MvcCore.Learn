@@ -17,6 +17,10 @@ using Linux.MvcCore.Learn.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.Options;
+using Linux.MvcCore.Learn.DDL.UserManager;
+using Linux.MvcCore.Learn.DDL.BlogManager;
+using Linux.MvcCore.Learn.Common;
 
 namespace Linux.MvcCore.Learn
 {
@@ -59,6 +63,18 @@ namespace Linux.MvcCore.Learn
             );
             // Add framework services.
             services.AddMvc();
+
+
+            services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IAdminIndex, AdminIndex>();
+            services.AddScoped<IBlogCommentManage, BlogCommentManage>();
+            services.AddScoped<IBlogPostManager, BlogPostManager>();
+            services.AddScoped<IBlogTagManage, BlogTagManage>();
+            services.AddScoped<IHomeMainManager, HomeMainManager>();
+            services.AddScoped<ISpamShieldService, SpamShieldService>();
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +95,8 @@ namespace Linux.MvcCore.Learn
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
 
             if (env.IsDevelopment())
             {

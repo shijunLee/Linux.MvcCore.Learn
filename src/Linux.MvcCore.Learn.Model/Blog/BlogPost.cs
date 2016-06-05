@@ -14,7 +14,7 @@ namespace Linux.MvcCore.Learn.Model.Blog
         /// <summary>
         /// 主键id
         /// </summary>
-        public string Id { get; set; }
+        public string BlogId { get; set; }
 
         /// <summary>
         /// blog标题
@@ -105,7 +105,7 @@ namespace Linux.MvcCore.Learn.Model.Blog
         /// <returns></returns>
         public string GetLink()
         {
-            return "/Home/Details/{0}".FormatWith(Id);
+            return "/Home/Details/{0}".FormatWith(BlogId);
         }
     }
 

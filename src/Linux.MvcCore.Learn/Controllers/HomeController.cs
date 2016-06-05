@@ -19,6 +19,21 @@ namespace Linux.MvcCore.Learn.Controllers
     public class HomeController : FrontBaseController
     {
 
+        private readonly IHomeMainManager manager;
+
+        private readonly IBlogTagManage tagManager;
+
+        private readonly ISpamShieldService service; 
+        private readonly IBlogPostManager blogPostmanager; 
+
+        public HomeController(IHomeMainManager manager, IBlogTagManage tagManager, ISpamShieldService service, IBlogPostManager blogPostmanager) :base(manager, tagManager)
+        {
+            this.manager = manager;
+            this.tagManager = tagManager;
+            this.service = service;
+            this.blogPostmanager = blogPostmanager;
+        }
+
         public ActionResult KinderEditerTest()
         {
             return View();
@@ -43,9 +58,8 @@ namespace Linux.MvcCore.Learn.Controllers
 
         public ActionResult Details(string id = "")
         {
-            ISpamShieldService service = new SpamShieldService();
-            BlogPostManager manager = new BlogPostManager();
-            BlogPostDetailsViewModel model = manager.GetBlogDetails(new BlogPostDetailsBindingModel() { Permalink = id });
+            
+            BlogPostDetailsViewModel model = blogPostmanager.GetBlogDetails(new BlogPostDetailsBindingModel() { Permalink = id });
             ViewBag.Title = model.BlogPost.Title;
 
             ViewBag.Tick = service.CreateTick(id);
@@ -53,16 +67,14 @@ namespace Linux.MvcCore.Learn.Controllers
         }
 
         public ActionResult Spamhash(string id)
-        {
-            ISpamShieldService service = new SpamShieldService();
+        { 
             string result =  service.GenerateHash(id);
             return Content(result);
         }
      
         public ActionResult Index(int page = 1)
         {
-            HomeMainManager homeMainManager = new HomeMainManager();
-            RecentBlogPostsViewModel model = homeMainManager.GetRecentBlogPosts(new RecentBlogPostsBindingModel() { Page = page,Take=10 });
+            RecentBlogPostsViewModel model = manager.GetRecentBlogPosts(new RecentBlogPostsBindingModel() { Page = page,Take=10 });
             if (model.Posts.Count() == 0)
             {
                 if (page > 1)
@@ -80,8 +92,8 @@ namespace Linux.MvcCore.Learn.Controllers
 
         public ActionResult Tag(string id)
         {
-            BlogTagManage manager = new BlogTagManage();
-            var result = manager.GetPostByTag(new TaggedBlogPostsBindingModel() { Tag = id });
+             
+            var result = tagManager.GetPostByTag(new TaggedBlogPostsBindingModel() { Tag = id });
             return View(result);
         }
     }

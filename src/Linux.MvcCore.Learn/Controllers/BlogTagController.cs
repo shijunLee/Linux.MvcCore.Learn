@@ -9,6 +9,11 @@ namespace Linux.MvcCore.Learn.Controllers
 {
     public class BlogTagController : Controller
     {
+        private readonly  IBlogTagManage manager;
+        public BlogTagController(IBlogTagManage manager)
+        {
+            this.manager = manager;
+        }
         //
         // GET: /BlogTag/
 
@@ -20,7 +25,7 @@ namespace Linux.MvcCore.Learn.Controllers
         public ActionResult GetList(int page=0)
         {
             TagCloudViewModel model = new TagCloudViewModel();
-            BlogTagManage manager = new BlogTagManage();
+            //BlogTagManage manager = new BlogTagManage();
             model = manager.GetAll(null);
             return View(model);
         }

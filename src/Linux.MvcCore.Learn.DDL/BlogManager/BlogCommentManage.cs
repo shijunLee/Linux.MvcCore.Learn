@@ -10,11 +10,25 @@ using Linux.MvcCore.Learn.DDL.CommandModel;
 using Linux.MvcCore.Learn.DDL.ViewModel;
 using Linux.MvcCore.Learn.Model;
 using Linux.MvcCore.Learn.Model.Blog;
+using Microsoft.Extensions.Logging;
 
 namespace Linux.MvcCore.Learn.DDL.BlogManager
 {
-    public class BlogCommentManage
+    public class BlogCommentManage: IBlogCommentManage
     {
+        private readonly LearnContext context;
+
+        private readonly ILogger _logger;
+
+        private readonly ISpamShieldService service;
+
+        public BlogCommentManage(LearnContext context, ILoggerFactory loggerFactory, ISpamShieldService service)
+        {
+            this._logger = loggerFactory.CreateLogger("IDataEventRecordResporitory");
+            this.context = context;
+            this.service = service;
+        }
+
         public AllBlogCommentsViewModel GetAll(AllBlogCommentsBindingModel input)
         { 
             List<BlogComment> commentList = new List<BlogComment>();
@@ -38,8 +52,7 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
         {
             if(!String.IsNullOrEmpty(id))
             {
-                using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-                {
+                
                     BlogComment comment = context.BlogComments.Where(p => p.Id == id).SingleOrDefault();
                     if (comment != null)
                     {
@@ -48,14 +61,14 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
                         return true;
                     }
                     return false;
-                }
+               
             }
             return false;
         }
 
         public bool SaveNewBlogComment(NewCommentCommand command)
         {
-            ISpamShieldService service = new SpamShieldService();
+              
 
             if(service.IsSpam(command.SpamShield))
             {
@@ -63,8 +76,7 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
             }
             if (command != null)
             {
-                using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-                {
+                
                     var comment = new BlogComment
                     {
                         Id = command.Id,
@@ -79,7 +91,7 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
                     context.BlogComments.Add(comment);
                     context.SaveChanges();
                     return true;
-                }
+                 
             
             }
             return false;

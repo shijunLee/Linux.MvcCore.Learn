@@ -35,8 +35,8 @@ namespace Linux.MvcCore.Learn.Model
         {
             ///role
             modelBuilder.Entity<Role>().HasKey(p => p.RoleId).ForSqliteHasName("RoleId");
-            modelBuilder.Entity<Role>().ForSqliteToTable("role").HasMany(p => p.SysMenus);
-            modelBuilder.Entity<Role>().HasMany(p => p.SysUsers);
+            //modelBuilder.Entity<Role>().ForSqliteToTable("role").HasMany(p => p.SysMenus);
+            //modelBuilder.Entity<Role>().HasMany(p => p.SysUsers);
             modelBuilder.Entity<Role>().Property(p => p.RoleName).ForSqliteHasColumnName("RoleName");
             modelBuilder.Entity<Role>().Property(p => p.RoleRemark).ForSqliteHasColumnName("RoleRemark");
 
@@ -71,7 +71,7 @@ namespace Linux.MvcCore.Learn.Model
             modelBuilder.Entity<BlogComment>().Property(p => p.SiteUrl).ForSqliteHasColumnName("SiteUrl");
 
             //BlogPost
-            modelBuilder.Entity<BlogPost>().ForSqliteToTable("BlogPost").HasKey(p => p.Id).ForSqliteHasName("BlogId");
+            modelBuilder.Entity<BlogPost>().ForSqliteToTable("BlogPost").HasKey(p => p.BlogId).ForSqliteHasName("BlogId");
             modelBuilder.Entity<BlogPost>().Property(p => p.PubDate).IsRequired().ForSqliteHasColumnName("PubDate");
             modelBuilder.Entity<BlogPost>().Property(p => p.AuthorDisplayName).IsRequired().ForSqliteHasColumnName("AuthorDisplayName");
             modelBuilder.Entity<BlogPost>().Property(p => p.AuthorEmail).IsRequired().ForSqliteHasColumnName("AuthorEmail");
@@ -92,7 +92,7 @@ namespace Linux.MvcCore.Learn.Model
             modelBuilder.Entity<BlogTag>().Property(p => p.Slug).ForSqliteHasColumnName("Slug");
 
             //SpamHash 
-            modelBuilder.Entity<SpamHash>().ForSqliteToTable("spamhash").HasKey(p => p.Id).ForSqliteHasName("SpamHashId");
+            modelBuilder.Entity<SpamHash>().ForSqliteToTable("spamhash").HasKey(p => p.SpamHashId).ForSqliteHasName("SpamHashId");
             modelBuilder.Entity<SpamHash>().Property(p => p.CreatedTime).ForSqliteHasColumnName("CreatedTime");
             modelBuilder.Entity<SpamHash>().Property(p => p.Hash).ForSqliteHasColumnName("Hash");
             modelBuilder.Entity<SpamHash>().Property(p => p.Pass).ForSqliteHasColumnName("Pass");

@@ -13,6 +13,14 @@ namespace Linux.MvcCore.Learn.Controllers
 {
     public class BlogPostController : BaseController
     {
+
+        private readonly IBlogPostManager manager;
+
+        public BlogPostController(IBlogPostManager manager)
+        {
+            this.manager = manager;
+
+        }
         //
         // GET: /BlogPost/
 
@@ -24,7 +32,7 @@ namespace Linux.MvcCore.Learn.Controllers
 
         public ActionResult GetList(int page = 1)
         {
-            BlogPostManager manager = new BlogPostManager();
+            //BlogPostManager manager = new BlogPostManager();
             var model = manager.GetBlogPostList(new AllBlogPostsBindingModel()
             {
                 Page = page,
@@ -40,7 +48,7 @@ namespace Linux.MvcCore.Learn.Controllers
         {
             if (!String.IsNullOrEmpty(id))
             {
-                BlogPostManager manager = new BlogPostManager();
+                //BlogPostManager manager = new BlogPostManager();
                 manager.DeleteBlogPost(id);
             }
             return RedirectToAction("GetList", "BlogPost",1);
@@ -59,7 +67,7 @@ namespace Linux.MvcCore.Learn.Controllers
             BlogPostEditBindingModel post = new BlogPostEditBindingModel();
             if (!String.IsNullOrEmpty(id))
             {
-                BlogPostManager manager = new BlogPostManager();
+               // BlogPostManager manager = new BlogPostManager();
                 BlogPost blogPost = new BlogPost();
                 blogPost = manager.GetById(id);
                 //string tags = "";
@@ -76,7 +84,7 @@ namespace Linux.MvcCore.Learn.Controllers
         [HttpPost]
         public ActionResult Edit(EditPostCommand postCommand)
         {
-            BlogPostManager manager = new BlogPostManager();
+            //BlogPostManager manager = new BlogPostManager();
             BlogPost post = manager.SaveEditBlogPost(postCommand);
 
             BlogPostEditBindingModel editPost = new BlogPostEditBindingModel();
@@ -100,7 +108,7 @@ namespace Linux.MvcCore.Learn.Controllers
 
 
             command.Author = this.author;
-            BlogPostManager manager = new BlogPostManager();
+            //BlogPostManager manager = new BlogPostManager();
             manager.SaveBlogPost(command);
             return View(command);
         }

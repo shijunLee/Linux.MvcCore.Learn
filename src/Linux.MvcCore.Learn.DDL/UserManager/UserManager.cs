@@ -1,4 +1,5 @@
 ﻿using Linux.MvcCore.Learn.Model;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,17 +8,29 @@ using System.Threading.Tasks;
 
 namespace Linux.MvcCore.Learn.DDL.UserManager
 {
-    public class UserManager
-    { /// <summary>
-      /// 用户登陆
-      /// </summary>
-      /// <param name="userCode"></param>
-      /// <param name="passWord"></param>
-      /// <returns></returns>
+    public class UserManager:IUserManager
+    {
+
+        private readonly LearnContext dbContext;
+
+        private readonly ILogger _logger;
+
+        public UserManager(LearnContext context, ILoggerFactory loggerFactory)
+        {
+            this._logger = loggerFactory.CreateLogger("IDataEventRecordResporitory");
+            this.dbContext = context;
+        }
+
+
+        /// <summary>
+        /// 用户登陆
+        /// </summary>
+        /// <param name="userCode"></param>
+        /// <param name="passWord"></param>
+        /// <returns></returns>
         public bool UserLogin(string userCode, string passWord)
         {
-            using (var dbContext = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-            {
+             
                 var result = dbContext.SysUsers.Where(p => p.UserLoginName == userCode && p.Password == passWord).ToList();
                 if (result.Count == 1)
                 {
@@ -27,7 +40,7 @@ namespace Linux.MvcCore.Learn.DDL.UserManager
                 {
                     return false;
                 }
-            }
+            
         }
 
         public bool ChangePassword(string userCode, string oldPassword, string newPassword)

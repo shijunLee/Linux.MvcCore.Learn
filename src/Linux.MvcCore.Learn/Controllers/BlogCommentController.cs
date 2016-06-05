@@ -13,6 +13,13 @@ namespace Linux.MvcCore.Learn.Controllers
 {
     public class BlogCommentController : Controller
     {
+
+
+       private readonly  IBlogCommentManage manager;
+        public BlogCommentController(IBlogCommentManage manager)
+        {
+            this.manager = manager;
+        }
         //
         // GET: /BlogComment/
 
@@ -24,7 +31,7 @@ namespace Linux.MvcCore.Learn.Controllers
 
         public ActionResult GetList(int page =1)
         {
-            BlogCommentManage manager = new BlogCommentManage();
+            //BlogCommentManage manager = new BlogCommentManage();
             AllBlogCommentsViewModel model = new AllBlogCommentsViewModel();
             model = manager.GetAll(new AllBlogCommentsBindingModel()
                     {
@@ -37,7 +44,7 @@ namespace Linux.MvcCore.Learn.Controllers
         {
             if (!String.IsNullOrEmpty(id))
             {
-                BlogCommentManage manager = new BlogCommentManage();
+               // BlogCommentManage manager = new BlogCommentManage();
                 manager.DeleteBlogComment(id);
             }
 
@@ -49,7 +56,7 @@ namespace Linux.MvcCore.Learn.Controllers
             command.SpamShield = spam;
             command.IPAddress = Request.Host.Host;
            
-            BlogCommentManage manager = new BlogCommentManage();
+            //BlogCommentManage manager = new BlogCommentManage();
             manager.SaveNewBlogComment(command);
             return RedirectToAction("Details", "Home", new { id = command.PostId });
         }

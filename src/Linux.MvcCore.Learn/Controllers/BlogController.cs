@@ -9,13 +9,19 @@ namespace Linux.MvcCore.Learn.Controllers
 {
     public class BlogController : BaseController
     {
+        private readonly IAdminIndex indexManager;
+
+        public BlogController(IAdminIndex indexManager)
+        {
+            this.indexManager = indexManager;
+        }
         //
         // GET: /Blog/
 
         public ActionResult Index()
         {
             AllStatisticsViewModel model = new AllStatisticsViewModel();
-            AdminIndex indexManager = new AdminIndex();
+            //AdminIndex indexManager = new AdminIndex();
             model = indexManager.GetBlogStatistics();
          
             return View(model);

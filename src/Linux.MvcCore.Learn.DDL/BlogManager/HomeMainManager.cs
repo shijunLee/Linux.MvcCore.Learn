@@ -9,15 +9,26 @@ using Linux.MvcCore.Learn.Model;
 using Linux.MvcCore.Learn.Model.Blog;
 using Linux.MvcCore.Learn.Common.Extensions;
 using System.Globalization;
+using Microsoft.Extensions.Logging;
 
 namespace Linux.MvcCore.Learn.DDL.BlogManager
 {
-    public class HomeMainManager
+    public class HomeMainManager:IHomeMainManager
     {
+
+        private readonly LearnContext context;
+
+        private readonly ILogger _logger;
+
+        public HomeMainManager(LearnContext context, ILoggerFactory loggerFactory)
+        {
+            this._logger = loggerFactory.CreateLogger("IDataEventRecordResporitory");
+            this.context = context;
+        }
+
         public RecentBlogPostsViewModel GetRecentBlogPosts(RecentBlogPostsBindingModel input)
         {
-            using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-            {
+             
                 var skip = (input.Page - 1) * input.Take;
                 var take = input.Take + 1;
                 List<BlogPost> postList = context.BlogPosts.Where(p => p.Status == (int)PublishStatus.Published)
@@ -30,15 +41,14 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
                     Page = input.Page,
                     HasNextPage = hasNextPage
                 };
-            }
+             
         }
 
         public RecentBlogPostSummaryViewModel GetRecentBlogPostSummaryView(RecentBlogPostSummaryBindingModel input)
         {
-            using (LearnContext context = new LearnContext(new Microsoft.EntityFrameworkCore.DbContextOptions<LearnContext>()))
-            {
+           
                 var titles = context.BlogPosts.Where(p => p.Status == (int)PublishStatus.Published).OrderByDescending(p => p.PubDate)
-                    .Select(p => new { PostId=p.Id, Title = p.Title, PubDate = p.PubDate, TitleSlug = p.TitleSlug }).Take(input.Page).ToList();
+                    .Select(p => new { PostId=p.BlogId, Title = p.Title, PubDate = p.PubDate, TitleSlug = p.TitleSlug }).Take(input.Page).ToList();
                 //p => new BlogPostSummary { Title = p.Title, Link = "/{0}/{1}".FormatWith(p.PubDate.ToString("yyyy/MM", CultureInfo.InvariantCulture), p.TitleSlug) }
                 List<BlogPostSummary> lists = new List<BlogPostSummary>();
                 foreach (var item in titles)
@@ -47,7 +57,7 @@ namespace Linux.MvcCore.Learn.DDL.BlogManager
                     lists.Add(sum);
                 }
                 return new RecentBlogPostSummaryViewModel { BlogPostsSummaries = lists };
-            }
+            
         }
     }
 }

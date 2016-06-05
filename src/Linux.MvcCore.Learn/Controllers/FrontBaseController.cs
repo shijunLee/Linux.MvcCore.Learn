@@ -10,17 +10,23 @@ namespace Linux.MvcCore.Learn.Controllers
 {
     public class FrontBaseController:Controller
     {
-        public FrontBaseController()
-            : base()
-        {
+        private readonly IHomeMainManager manager;
 
+        private readonly IBlogTagManage tagManager;
+
+
+
+        public FrontBaseController(IHomeMainManager manager, IBlogTagManage tagManager)
+        {
+            this.manager = manager;
+            this.tagManager = tagManager;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            HomeMainManager manager = new HomeMainManager();
+           // HomeMainManager manager = new HomeMainManager();
             ViewBag.Recent = manager.GetRecentBlogPostSummaryView( new RecentBlogPostSummaryBindingModel { Page = 10 });
-            BlogTagManage tagManager = new BlogTagManage();
+            //BlogTagManage tagManager = new BlogTagManage();
 
             ViewBag.TagCould = tagManager.GetAll(new TagCloudBindingModel() { Threshold = 2 });
         }
