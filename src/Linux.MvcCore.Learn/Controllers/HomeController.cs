@@ -14,6 +14,7 @@ using System.Collections;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
+using System.IO;
 
 namespace Linux.MvcCore.Learn.Controllers
 {
@@ -78,7 +79,10 @@ namespace Linux.MvcCore.Learn.Controllers
      
         public ActionResult Index(int page = 1)
         {
-            _logger.LogDebug("中文log测试");
+            ////取dll所在文件文件夹的位置
+            _logger.LogDebug("中文log测试" + AppContext.BaseDirectory);
+            ////取当前运行程序文件位置
+            _logger.LogDebug("中文log测试"+ Directory.GetCurrentDirectory());
             RecentBlogPostsViewModel model = manager.GetRecentBlogPosts(new RecentBlogPostsBindingModel() { Page = page,Take=10 });
             if (model.Posts.Count() == 0)
             {

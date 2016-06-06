@@ -38,7 +38,7 @@ namespace Linux.MvcCore.Learn
                 ICollection configurationMessages = XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
                 
             }
-             
+           
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
