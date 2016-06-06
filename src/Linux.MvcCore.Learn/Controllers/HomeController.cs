@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq; 
+using System.Linq;
 using Linux.MvcCore.Learn.Model.Admin;
 using Linux.MvcCore.Learn.Model;
 using Linux.MvcCore.Learn.DDL.UserManager;
- 
+
 using Linux.MvcCore.Learn.Common;
 using Linux.MvcCore.Learn.DDL.BindingModel;
 using Linux.MvcCore.Learn.DDL.BlogManager;
@@ -13,6 +13,7 @@ using System.Net;
 using System.Collections;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
 
 namespace Linux.MvcCore.Learn.Controllers
 {
@@ -24,14 +25,17 @@ namespace Linux.MvcCore.Learn.Controllers
         private readonly IBlogTagManage tagManager;
 
         private readonly ISpamShieldService service; 
-        private readonly IBlogPostManager blogPostmanager; 
+        private readonly IBlogPostManager blogPostmanager;
 
-        public HomeController(IHomeMainManager manager, IBlogTagManage tagManager, ISpamShieldService service, IBlogPostManager blogPostmanager) :base(manager, tagManager)
+        private readonly ILogger _logger;
+
+        public HomeController(IHomeMainManager manager, IBlogTagManage tagManager, ISpamShieldService service, IBlogPostManager blogPostmanager, ILoggerFactory loggerFactory) :base(manager, tagManager)
         {
             this.manager = manager;
             this.tagManager = tagManager;
             this.service = service;
             this.blogPostmanager = blogPostmanager;
+            this._logger = loggerFactory.CreateLogger("HomeController");
         }
 
         public ActionResult KinderEditerTest()
@@ -74,6 +78,7 @@ namespace Linux.MvcCore.Learn.Controllers
      
         public ActionResult Index(int page = 1)
         {
+            _logger.LogDebug("中文log测试");
             RecentBlogPostsViewModel model = manager.GetRecentBlogPosts(new RecentBlogPostsBindingModel() { Page = page,Take=10 });
             if (model.Posts.Count() == 0)
             {

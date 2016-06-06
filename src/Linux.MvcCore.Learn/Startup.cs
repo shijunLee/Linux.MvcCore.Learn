@@ -30,7 +30,7 @@ namespace Linux.MvcCore.Learn
         public Startup(IHostingEnvironment env)
         {
              
-            using (Stream stream = File.Open(env.ContentRootPath + "\\Log4Net.config", FileMode.Open))
+            using (Stream stream = File.Open(env.ContentRootPath + "/Log4Net.config", FileMode.Open))
             {
                 XmlDocument log4netConfig = new XmlDocument();
                 log4netConfig.Load(stream);

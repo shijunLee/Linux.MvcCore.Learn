@@ -50,7 +50,8 @@
     "Microsoft.AspNetCore.Authentication": "1.0.0-rc2-final",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0-rc2-final",
     "Microsoft.AspNetCore.DataProtection": "1.0.0-rc2-final",
-    "Microsoft.AspNetCore.DataProtection.Extensions": "1.0.0-rc2-final" 
+    "Microsoft.AspNetCore.DataProtection.Extensions": "1.0.0-rc2-final",
+    "System.Text.Encoding.CodePages": "4.0.1-rc3-24128-00" 
   },
 
   "tools": {
