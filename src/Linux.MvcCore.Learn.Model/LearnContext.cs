@@ -49,7 +49,7 @@ namespace Linux.MvcCore.Learn.Model
             ///sysuser
             modelBuilder.Entity<SysUser>().ForSqliteToTable("sysuser").HasKey(p => p.UserID).ForSqliteHasName("UserID");
             modelBuilder.Entity<SysUser>().Property(p => p.UserLoginName).ForSqliteHasColumnName("UserLoginName");
-            modelBuilder.Entity<SysUser>().Property(p => p.Password).ForSqliteHasColumnName("MenuRemark");
+            modelBuilder.Entity<SysUser>().Property(p => p.Password).ForSqliteHasColumnName("Password");
 
             ///userDetile 
             modelBuilder.Entity<UserDetial>().ForSqliteToTable("userdetial").HasKey(p => p.UserDetialId).ForSqliteHasName("UserDetialId");

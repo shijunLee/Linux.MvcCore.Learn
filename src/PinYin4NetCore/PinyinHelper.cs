@@ -50,11 +50,10 @@ namespace Pinyin4net
         static PinyinHelper()
         {
             dict = new Dictionary<string, string>();
+            var asm = typeof(PinyinHelper).GetTypeInfo().Assembly;
             var doc = XDocument.Load(
-                Assembly.Load(new AssemblyName("PinYin4NetCore")).GetManifestResourceStream("Pinyin4net.Resources.unicode_to_hanyu_pinyin.xml")
-               // Assembly.GetEntryAssembly().GetManifestResourceStream("Pinyin4net.Resources.unicode_to_hanyu_pinyin.xml")
-                //Assembly.GetExecutingAssembly().GetManifestResourceStream()
-                );
+                  asm.GetManifestResourceStream(asm.GetName().Name + ".Resources.unicode_to_hanyu_pinyin.xml"));
+
             var query =
                 from item in doc.Root.Descendants("item")
                 select new

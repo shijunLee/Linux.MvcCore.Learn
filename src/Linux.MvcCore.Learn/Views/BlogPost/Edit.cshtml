@@ -17,7 +17,7 @@
 <div class="row">
     <article class="col-lg-6" style="padding-left:0;">
         <form method="post" role="form" action="~/BlogPost/Edit">
-            <input name="PostId" id="postId" type="hidden" value="@Model.BlogPost.Id" />
+            <input name="PostId" id="postId" type="hidden" value="@Model.BlogPost.BlogId" />
             <div class="form-group">
                 <input id="post-title" type="text" class="form-control" name="Title" placeholder="标题" value="@Model.BlogPost.Title" required />
             </div>
@@ -59,8 +59,8 @@
     </div>
 </div>
 @section PostScripts{
-    <script src="~/Scripts/jquery.tagsinput.js"></script>
-    <script src="~/Scripts/markdown.js"></script>
+    <script src="~/js/jquery.tagsinput.js"></script> 
+    <script src="~/js/markdown.js"></script>
     <script>
         $('#tags').tagsInput({ 'width': '100%', 'defaultText': '添加标签' });
         $('#post-title').on('change', function () {

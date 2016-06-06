@@ -28,7 +28,7 @@
             {
                 <tr>
                     <td>
-                        <a href="~/BlogPost/Edit/@blogPost.Id" class="btn btn-default btn-xs">编辑</a>
+                        <a href="~/BlogPost/Edit/@blogPost.BlogId" class="btn btn-default btn-xs">编辑</a>
                     </td>
                     <td>
                         <a href="@blogPost.GetLink()">@blogPost.Title</a>
@@ -48,7 +48,7 @@
                         @blogPost.PubDate.ToChineseTime().ToString("yyyy-MM-dd hh:mm")
                     </td>
                     <td>
-                        <a href="~/BlogPost/Delete/@blogPost.Id" class="btn btn-danger btn-xs">删除</a>
+                        <a href="~/BlogPost/Delete/@blogPost.BlogId" class="btn btn-danger btn-xs">删除</a>
                     </td>
                 </tr>
             }

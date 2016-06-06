@@ -1,4 +1,4 @@
-﻿@using  Linux.MvcCore.Learn.Common.Extensions
+﻿@using Linux.MvcCore.Learn.Common.Extensions
 @using Linux.MvcCore.Learn.DDL.ViewModel
 @model BlogPostDetailsViewModel
 @{
@@ -100,7 +100,7 @@
         <div class="validation-summary-valid" data-valmsg-summary="true">
             <ul><li style="display:none"></li></ul>
         </div>
-        <input id="postId" name="PostId" type="hidden" value="@Model.BlogPost.BlogId"/>
+        <input id="postId" name="PostId" type="hidden" value="@Model.BlogPost.BlogId" />
         <input id="_tick" type="hidden" name="tick" value="@ViewBag.Tick" />
         <input id="_hash" type="hidden" name="hash" value="" />
         <div class="form-group">
@@ -121,11 +121,12 @@
     </form>
 </div>
 @section PostScripts{
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <!-- for Highlight.js support -->
-    <link href="~/Content/Highlight/vs.css" rel="stylesheet" />
-    <script src="~/Scripts/Highlight/highlight.pack.js"></script>
+    <link href="~/css/Highlight/vs.css" rel="stylesheet" />
+    <script src="~/js/Highlight/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script type="text/javascript">
         $('pre code').each(function (i, e) { hljs.highlightBlock(e) });

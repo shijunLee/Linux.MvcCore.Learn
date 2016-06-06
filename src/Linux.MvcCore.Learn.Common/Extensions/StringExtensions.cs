@@ -1,4 +1,5 @@
-﻿using Pinyin4net;
+﻿
+using Pinyin4net;
 using Pinyin4net.Format;
 using System;
 using System.Collections.Generic;

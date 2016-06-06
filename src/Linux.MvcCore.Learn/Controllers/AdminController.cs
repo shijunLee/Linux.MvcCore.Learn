@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Linux.MvcCore.Learn.DDL.UserManager;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Linux.MvcCore.Learn.Controllers
 {
@@ -35,7 +37,7 @@ namespace Linux.MvcCore.Learn.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(SysUser user, string ReturnUrl)
+        public async Task<ActionResult> Login(SysUser user, string ReturnUrl)
         {
 
             //DDL.UserManager.UserManager manager = new DDL.UserManager.UserManager();
@@ -44,7 +46,18 @@ namespace Linux.MvcCore.Learn.Controllers
 
             if (result)
             {
-                 
+              
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name,user.UserLoginName),
+                    
+                }; 
+                var id = new ClaimsIdentity(claims, "CustomApiKeyAuth");
+                
+                ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(); 
+                claimsPrincipal.AddIdentity(id);
+                await HttpContext.Authentication.SignInAsync("MyCookieMiddlewareInstance", claimsPrincipal);
+
                 if (String.IsNullOrEmpty(ReturnUrl))
                 {
                     

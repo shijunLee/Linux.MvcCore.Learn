@@ -10,8 +10,10 @@
     <!--[if lt IE 9]>
         <script src="~/Scripts/html5shiv.js"></script>
         <![endif]-->
-    <link href="~/Content/bootstrap/bootstrap.min.css?v=3.3.2" rel="stylesheet" />
-    <link href="~/Content/css/mzblog.min.css?v=20140101" rel="stylesheet" />
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+    <link href="~/css/mzblog.css" rel="stylesheet" />
 </head>
 <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -39,8 +41,9 @@
             <p class="text-center">Power by mzblog &copy; @DateTime.Now.Year</p>
         </div>
     </footer>
-    <script src="~/Scripts/jquery-1.11.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js?v=3.3.2"></script>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script> 
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     @RenderSection("PostScripts", false)
 </body>
 </html>

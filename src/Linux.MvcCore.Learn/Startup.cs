@@ -21,6 +21,7 @@ using Microsoft.Extensions.Options;
 using Linux.MvcCore.Learn.DDL.UserManager;
 using Linux.MvcCore.Learn.DDL.BlogManager;
 using Linux.MvcCore.Learn.Common;
+using Linux.MVC.Learn.GlobalFilter;
 
 namespace Linux.MvcCore.Learn
 {
@@ -62,7 +63,10 @@ namespace Linux.MvcCore.Learn
                 options.UseSqlite(connection)
             );
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(config =>
+            { 
+                config.Filters.Add( new WebAppFilter());
+            });
 
 
             services.AddScoped<IUserManager, UserManager>();
@@ -83,6 +87,7 @@ namespace Linux.MvcCore.Learn
            var dataProtection = DataProtectionProvider.Create(env.ContentRootPath + "\\keys");
            // var dataProtection = new DataProtectionProvider(new DirectoryInfo(@"C:\keys"));// no use UNC share
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
+                AuthenticationScheme = "MyCookieMiddlewareInstance",
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 CookieHttpOnly = true,
@@ -92,6 +97,7 @@ namespace Linux.MvcCore.Learn
                 CookiePath = "/",
                 DataProtectionProvider = dataProtection
             });
+           
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
