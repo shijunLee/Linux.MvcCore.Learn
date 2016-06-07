@@ -84,6 +84,9 @@ namespace Linux.MvcCore.Learn
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+
+            
+
            var dataProtection = DataProtectionProvider.Create(env.ContentRootPath + "\\keys");
            // var dataProtection = new DataProtectionProvider(new DirectoryInfo(@"C:\keys"));// no use UNC share
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
@@ -97,8 +100,8 @@ namespace Linux.MvcCore.Learn
                 CookiePath = "/",
                 DataProtectionProvider = dataProtection
             });
-           
 
+           
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();

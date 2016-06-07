@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using System.IO;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Linux.MvcCore.Learn.Controllers
 {
@@ -79,6 +82,19 @@ namespace Linux.MvcCore.Learn.Controllers
      
         public ActionResult Index(int page = 1)
         {
+            ///Add The Configuration  Builder code
+            var builder = new ConfigurationBuilder()
+              .SetBasePath(Directory.GetCurrentDirectory())
+              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+              .AddEnvironmentVariables();
+            var  configuration = builder.Build();
+            var conntionString = configuration["dataConnection:SqliteConnectionString"];
+           
+            var optionsBuilder = new DbContextOptionsBuilder<LearnContext>();
+            optionsBuilder.UseSqlite(conntionString);
+            LearnContext dbContent = new LearnContext(optionsBuilder.Options);
+            var list = dbContent.SysUsers.ToList();
+            _logger.LogDebug("中文log测试" + list.Count);
             ////取dll所在文件文件夹的位置
             _logger.LogDebug("中文log测试" + AppContext.BaseDirectory);
             ////取当前运行程序文件位置
