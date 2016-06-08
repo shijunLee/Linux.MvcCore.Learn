@@ -33,13 +33,16 @@ namespace Linux.MvcCore.Learn.Controllers
 
         private readonly ILogger _logger;
 
-        public HomeController(IHomeMainManager manager, IBlogTagManage tagManager, ISpamShieldService service, IBlogPostManager blogPostmanager, ILoggerFactory loggerFactory) :base(manager, tagManager)
+        private readonly IServiceProvider serviceProvider;
+
+        public HomeController(IHomeMainManager manager, IBlogTagManage tagManager, ISpamShieldService service, IBlogPostManager blogPostmanager, ILoggerFactory loggerFactory, IServiceProvider serviceProvider) :base(manager, tagManager)
         {
             this.manager = manager;
             this.tagManager = tagManager;
             this.service = service;
             this.blogPostmanager = blogPostmanager;
             this._logger = loggerFactory.CreateLogger("HomeController");
+            this.serviceProvider = serviceProvider;
         }
 
         public ActionResult KinderEditerTest()
@@ -82,6 +85,7 @@ namespace Linux.MvcCore.Learn.Controllers
      
         public ActionResult Index(int page = 1)
         {
+            ///可以是用ioc 进行注入
             ///Add The Configuration  Builder code
             var builder = new ConfigurationBuilder()
               .SetBasePath(Directory.GetCurrentDirectory())
@@ -89,7 +93,11 @@ namespace Linux.MvcCore.Learn.Controllers
               .AddEnvironmentVariables();
             var  configuration = builder.Build();
             var conntionString = configuration["dataConnection:SqliteConnectionString"];
-           
+
+
+          var dbContentTest =  serviceProvider.GetService<LearnContext>();
+            var list1 = dbContentTest.SysUsers.ToList();
+            _logger.LogDebug("中文log测试" + list1.Count);
             var optionsBuilder = new DbContextOptionsBuilder<LearnContext>();
             optionsBuilder.UseSqlite(conntionString);
             LearnContext dbContent = new LearnContext(optionsBuilder.Options);
