@@ -93,9 +93,14 @@ namespace Linux.MvcCore.Learn.Controllers
               .AddEnvironmentVariables();
             var  configuration = builder.Build();
             var conntionString = configuration["dataConnection:SqliteConnectionString"];
+            var conntionSection = configuration.GetSection("markdown");
+            var configChildren = conntionSection.GetChildren();
+            foreach (var item in configChildren)
+            {
+                _logger.LogDebug("中文log测试" + item.Value);
+            }
 
-
-          var dbContentTest =  serviceProvider.GetService<LearnContext>();
+           var dbContentTest =  serviceProvider.GetService<LearnContext>();
             var list1 = dbContentTest.SysUsers.ToList();
             _logger.LogDebug("中文log测试" + list1.Count);
             var optionsBuilder = new DbContextOptionsBuilder<LearnContext>();

@@ -7,10 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using log4net.Config;
 using System.IO;
-using log4net.Repository;
-using log4net;
 using System.Collections;
 using System.Xml;
 using Linux.MvcCore.Learn.Model;
@@ -30,14 +27,14 @@ namespace Linux.MvcCore.Learn
         public Startup(IHostingEnvironment env)
         {
              
-            using (Stream stream = File.Open(env.ContentRootPath + "/Log4Net.config", FileMode.Open))
-            {
-                XmlDocument log4netConfig = new XmlDocument();
-                log4netConfig.Load(stream);
-                ILoggerRepository rep = LogManager.CreateRepository("linux.mvcCore.Learn"); 
-                ICollection configurationMessages = XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
+           // using (Stream stream = File.Open(env.ContentRootPath + "/Log4Net.config", FileMode.Open))
+           // {
+           //     XmlDocument log4netConfig = new XmlDocument();
+           //     log4netConfig.Load(stream);
+           //     ILoggerRepository rep = LogManager.CreateRepository("linux.mvcCore.Learn"); 
+           //     ICollection configurationMessages = XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
                 
-            }
+           // }
            
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)

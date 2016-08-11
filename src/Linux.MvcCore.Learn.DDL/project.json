@@ -4,9 +4,9 @@
   "dependencies": {
     "Linux.MvcCore.Learn.Common": "1.0.0-*",
     "Linux.MvcCore.Learn.Model": "1.0.0-*",
-    "Microsoft.EntityFrameworkCore": "1.0.0-rc2-final",
-    "NETStandard.Library": "1.5.0-rc2-24027",
-    "markdownsharpcore": "1.0.0"
+    "Microsoft.EntityFrameworkCore": "1.0.0",
+    "NETStandard.Library": "1.6.0",
+    "MarkdownSharp": "1.0.0"
   },
 
   "frameworks": {
