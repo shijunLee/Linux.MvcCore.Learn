@@ -15,10 +15,10 @@ namespace Linux.MvcCore.Learn.Common
 
         public static void WriteLog(Type t, Exception ex)
         {
-           // log4net.ILog log = log4net.LogManager.GetLogger("linux.mvcCore.Learn",t);
+            log4net.ILog log = log4net.LogManager.GetLogger("linux.mvcCore.Learn",t);
           
 
-            //log.Error("Error", ex);
+            log.Error("Error", ex);
         }
 
         #endregion
@@ -32,8 +32,8 @@ namespace Linux.MvcCore.Learn.Common
 
         public static void WriteLog(Type t, string msg)
         {
-           // log4net.ILog log = log4net.LogManager.GetLogger("linux.mvcCore.Learn", t);
-           // log.Error(msg);
+            log4net.ILog log = log4net.LogManager.GetLogger("linux.mvcCore.Learn", t);
+            log.Error(msg);
         }
 
         #endregion
