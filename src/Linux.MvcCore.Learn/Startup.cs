@@ -19,6 +19,9 @@ using Linux.MvcCore.Learn.DDL.UserManager;
 using Linux.MvcCore.Learn.DDL.BlogManager;
 using Linux.MvcCore.Learn.Common;
 using Linux.MVC.Learn.GlobalFilter;
+using log4net.Repository;
+using log4net;
+using log4net.Config;
 
 namespace Linux.MvcCore.Learn
 {
@@ -26,16 +29,16 @@ namespace Linux.MvcCore.Learn
     {
         public Startup(IHostingEnvironment env)
         {
-             
-           // using (Stream stream = File.Open(env.ContentRootPath + "/Log4Net.config", FileMode.Open))
-           // {
-           //     XmlDocument log4netConfig = new XmlDocument();
-           //     log4netConfig.Load(stream);
-           //     ILoggerRepository rep = LogManager.CreateRepository("linux.mvcCore.Learn"); 
-           //     ICollection configurationMessages = XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
-                
-           // }
-           
+
+            using (Stream stream = File.Open(env.ContentRootPath + "/Log4Net.config", FileMode.Open))
+            {
+                XmlDocument log4netConfig = new XmlDocument();
+                log4netConfig.Load(stream);
+                ILoggerRepository rep = LogManager.CreateRepository("linux.mvcCore.Learn");
+                ICollection configurationMessages = XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
+
+            }
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
